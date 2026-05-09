@@ -13,7 +13,7 @@
     :root {
       --accent: #9146FF; --bg: #07070f; --bg4: #181830;
       --text: #eeeef8; --muted: #6e6e90; --border: rgba(145,70,255,.18);
-      --green: #00c864; --yellow: #f5c518;
+      --green: #00c864; --yellow: #f5c518; --red: #ff4655;
     }
     body { font-family: 'Rajdhani', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
     body::before {
@@ -46,9 +46,12 @@
       cursor: pointer;
     }
     .game-card:hover { transform: translateY(-4px); border-color: rgba(145,70,255,.45); box-shadow: 0 12px 40px rgba(145,70,255,.2); }
+    .game-card.dropped:hover { border-color: rgba(255,70,85,.45); box-shadow: 0 12px 40px rgba(255,70,85,.15); }
     .game-card:hover .card-hover-hint { opacity: 1; }
 
     .game-card img { width: 100%; aspect-ratio: 460/215; object-fit: cover; display: block; }
+    .game-card.dropped img { filter: grayscale(40%) brightness(0.8); transition: filter .2s; }
+    .game-card.dropped:hover img { filter: grayscale(0%) brightness(1); }
 
     .card-hover-hint {
       position: absolute; top: 0; left: 0; right: 0;
@@ -66,6 +69,7 @@
     .game-badge.done    { background: rgba(0,200,100,.1);   border: 1px solid rgba(0,200,100,.35);  color: var(--green);  }
     .game-badge.playing { background: rgba(145,70,255,.1);  border: 1px solid rgba(145,70,255,.35); color: var(--accent); }
     .game-badge.planned { background: rgba(245,197,24,.08); border: 1px solid rgba(245,197,24,.35); color: var(--yellow); }
+    .game-badge.dropped { background: rgba(255,70,85,.08);  border: 1px solid rgba(255,70,85,.35);  color: var(--red); }
     .game-platform { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--muted); margin-left: auto; }
 
     .game-card-overlay {
@@ -77,6 +81,7 @@
     }
     .game-card-overlay.playing-overlay { background: rgba(145,70,255,.15); border-color: rgba(145,70,255,.4); color: var(--accent); }
     .game-card-overlay.planned-overlay { background: rgba(245,197,24,.1);  border-color: rgba(245,197,24,.4); color: var(--yellow); }
+    .game-card-overlay.dropped-overlay { background: rgba(255,70,85,.1);   border-color: rgba(255,70,85,.4);  color: var(--red); }
 
     .card-rating-chip {
       position: absolute; top: 8px; left: 8px;
@@ -160,7 +165,7 @@
     .nav-dropdown > a { cursor: pointer; }
     .dropdown-menu {
       position: absolute; top: 100%; left: 50%;
-      padding-top: 14px; /* невидимий міст між кнопкою і меню */
+      padding-top: 14px;
       transform: translateX(-50%);
       opacity: 0; pointer-events: none;
       transition: opacity .2s, transform .2s;
@@ -205,7 +210,6 @@
       .modal-score { font-size:38px; }
       .modal-title { font-size:22px; }
     }
-
 
     @media(max-width:380px){
       .mobile-menu a { font-size:26px; letter-spacing:2px; }
@@ -277,7 +281,6 @@
   <h1 class="section-title">ГРАЮ ЗАРАЗ</h1>
   <div class="games-grid" style="margin-bottom: 60px;">
 
-    <!-- ЩЕ ГРАЮ — оцінки немає, відгук порожній -->
     <div class="game-card"
          data-title="Приватний детектив МАУС"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2416450/298ff2fc3f6a700d022b8d3ec58047f2b426be03/header.jpg?t=1776902638"
@@ -304,8 +307,7 @@
   <h2 class="section-title">ПРОЙДЕНІ ІГРИ</h2>
   <div class="games-grid" style="margin-bottom: 60px;">
 
-    <!-- ПОВНИЙ ВІДГУК + ОЦІНКА 10/10 -->
-<div class="game-card"
+    <div class="game-card"
          data-title="PRAGMATA"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3357650/e32e168b25ed68a0cf6264c220c07e96c2abfb56/header.jpg?t=1777005719"
          data-rating="10"
@@ -323,8 +325,6 @@
       </div>
     </div>
 
-
-    
     <div class="game-card"
          data-title="God of War Ragnarök"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2322010/header.jpg?t=1776465233"
@@ -343,8 +343,7 @@
       </div>
     </div>
 
-
-<div class="game-card"
+    <div class="game-card"
          data-title="God of War"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2322010/header.jpg?t=1776465233"
          data-rating="10"
@@ -362,7 +361,6 @@
       </div>
     </div>
 
-<!-- ВІДГУК З ПЕРЕНОСОМ РЯДКА (&#10;) + ОЦІНКА 8/10 -->
     <div class="game-card"
          data-title="Alice: Madness Returns"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/19680/header.jpg?t=1655743771"
@@ -381,7 +379,6 @@
       </div>
     </div>
 
-    <!-- ТІЛЬКИ ОЦІНКА, БЕЗ ТЕКСТУ — data-review="" -->
     <div class="game-card"
          data-title="Відьмак 3: Дикий гін"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/ad9240e088f953a84aee814034c50a6a92bf4516/header.jpg?t=1768303991"
@@ -454,7 +451,7 @@
       </div>
     </div>
 
-<div class="game-card"
+    <div class="game-card"
          data-title="Path of Exile 2"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2694490/cf9f17c1f9eaa59a6a87f2faf3c03ac5a750b9da/header.jpg?t=1770195127"
          data-rating="10"
@@ -472,7 +469,7 @@
       </div>
     </div>
 
-<div class="game-card"
+    <div class="game-card"
          data-title="SILENT HILL f"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2947440/7e5d923ac622bd1775ebc9b5d4b5b0a24bf5ed40/header.jpg?t=1770169624"
          data-rating="10"
@@ -508,7 +505,7 @@
       </div>
     </div>
 
- <div class="game-card"
+    <div class="game-card"
          data-title="Overlord™: Raising Hell"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/12710/header.jpg?t=1729270521"
          data-rating="10"
@@ -526,17 +523,17 @@
       </div>
     </div>
 
-<div class="game-card"
-         data-title="Marvel’s Spider-Man: Miles Morales"
+    <div class="game-card"
+         data-title="Marvel's Spider-Man: Miles Morales"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1817190/header.jpg?t=1763569499"
          data-rating="10"
          data-review="Сюжет такий собі. гемплей цікавий . но не сюжетні квести не дуже цікаві інколи скучні">
-      <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1817190/header.jpg?t=1763569499" alt="Marvel’s Spider-Man: Miles Morales">
+      <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1817190/header.jpg?t=1763569499" alt="Marvel's Spider-Man: Miles Morales">
       <div class="card-hover-hint">★ ПЕРЕГЛЯНУТИ ВІДГУК</div>
       <div class="game-card-overlay">✓ ПРОЙДЕНО</div>
       <div class="card-rating-chip">★ 8.5/10</div>
       <div class="game-card-body">
-        <div class="game-card-title">Marvel’s Spider-Man: Miles Morales</div>
+        <div class="game-card-title">Marvel's Spider-Man: Miles Morales</div>
         <div class="game-card-meta">
           <span class="game-badge done">✓ ПРОЙДЕНО</span>
           <span class="game-platform">🎮</span>
@@ -544,7 +541,7 @@
       </div>
     </div>
 
-<div class="game-card"
+    <div class="game-card"
          data-title="Ori and the Blind Forest: Definitive Edition"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/387290/header.jpg?t=1701967651"
          data-rating="10"
@@ -560,9 +557,9 @@
           <span class="game-platform">🎮</span>
         </div>
       </div>
-    </div>    
+    </div>
 
- <div class="game-card"
+    <div class="game-card"
          data-title="Ori and the Will of the Wisps"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1057090/header.jpg?t=1759530749"
          data-rating="10"
@@ -578,9 +575,9 @@
           <span class="game-platform">🎮</span>
         </div>
       </div>
-    </div>   
- 
- <div class="game-card"
+    </div>
+
+    <div class="game-card"
          data-title="Metro Exodus"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/412020/header.jpg?t=1750772804"
          data-rating="10"
@@ -596,9 +593,9 @@
           <span class="game-platform">🎮</span>
         </div>
       </div>
-    </div>      
-   
- <div class="game-card"
+    </div>
+
+    <div class="game-card"
          data-title="Stray"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1332010/header.jpg?t=1733260906"
          data-rating="10"
@@ -614,9 +611,9 @@
           <span class="game-platform">🎮</span>
         </div>
       </div>
-    </div>     
+    </div>
 
-<div class="game-card"
+    <div class="game-card"
          data-title="Red Dead Redemption 2"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg?t=1759502961"
          data-rating="10"
@@ -632,9 +629,9 @@
           <span class="game-platform">🎮</span>
         </div>
       </div>
-    </div>  
+    </div>
 
- <div class="game-card"
+    <div class="game-card"
          data-title="Overlord II"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/12810/header.jpg?t=1656372034"
          data-rating="10"
@@ -710,12 +707,52 @@
 
   <div class="section-divider"></div>
 
+  <!-- ══════════ ЗАКИНУТІ ІГРИ ══════════ -->
+  <p class="section-label">// dropped</p>
+  <h2 class="section-title">ЗАКИНУТІ ІГРИ</h2>
+  <div class="games-grid" style="margin-bottom: 60px;">
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════════╗
+    ║  ЯК ДОДАВАТИ ЗАКИНУТІ ІГРИ                                      ║
+    ║                                                                  ║
+    ║  Скопіюй один з блоків нижче і заміни:                         ║
+    ║  - data-title="Назва гри"                                       ║
+    ║  - data-img="посилання на обкладинку"                           ║
+    ║  - data-rating="5"  ← або "" якщо не хочеш ставити оцінку      ║
+    ║  - data-review="Чому закинув..."  ← або ""                     ║
+    ║  - src="..." alt="..." у тегу <img>                             ║
+    ║  - текст у .game-card-title                                      ║
+    ╚══════════════════════════════════════════════════════════════════╝
+    -->
+
+    <!-- ПРИКЛАД ЗАКИНУТОЇ ГРИ — замінити на реальні дані -->
+    <div class="game-card dropped"
+         data-title="Назва гри"
+         data-img="https://via.placeholder.com/460x215/181830/ff4655?text=DROPPED"
+         data-rating=""
+         data-review="">
+      <img src="https://via.placeholder.com/460x215/181830/ff4655?text=DROPPED" alt="Назва гри">
+      <div class="card-hover-hint">✗ ПЕРЕГЛЯНУТИ</div>
+      <div class="game-card-overlay dropped-overlay">✗ ЗАКИНУТО</div>
+      <div class="game-card-body">
+        <div class="game-card-title">Назва гри</div>
+        <div class="game-card-meta">
+          <span class="game-badge dropped">✗ ЗАКИНУТО</span>
+          <span class="game-platform">🎮 STEAM</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-divider"></div>
+
   <!-- ══════════ ЗАПЛАНОВАНІ ══════════ -->
   <p class="section-label">// wishlist</p>
   <h2 class="section-title">ЗАПЛАНОВАНІ</h2>
   <div class="games-grid">
 
-    <!-- ЗАПЛАНОВАНА — є нотатки, оцінки немає -->
     <div class="game-card"
          data-title="DYNASTY WARRIORS: ORIGINS"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2384580/header.jpg?t=1775536473"
@@ -732,7 +769,7 @@
       </div>
     </div>
 
-<div class="game-card"
+    <div class="game-card"
          data-title="Absolum"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1904480/65f868078425ea29b87cb85075fcd1b3a8b71400/header.jpg?t=1772809437"
          data-rating=""
@@ -748,9 +785,6 @@
       </div>
     </div>
 
-
-
-    <!-- ЗАПЛАНОВАНА — без нотаток -->
     <div class="game-card"
          data-title="Elden Ring"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg?t=1698860631"
@@ -767,7 +801,7 @@
       </div>
     </div>
 
-<div class="game-card"
+    <div class="game-card"
          data-title="Stellar Blade™"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3489700/header.jpg?t=1776466244"
          data-rating=""
@@ -783,7 +817,7 @@
       </div>
     </div>
 
- <div class="game-card"
+    <div class="game-card"
          data-title="Resident Evil Requiem"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3764200/ce5437442768e38eb575f205ab9397d0264017b0/header.jpg?t=1772587704"
          data-rating=""
@@ -797,9 +831,9 @@
          <span class="game-platform">🎮 STEAM</span>
         </div>
       </div>
-    </div>   
-  
-  <div class="game-card"
+    </div>
+
+    <div class="game-card"
          data-title="State of Decay 3"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1340720/header.jpg?t=1718067214"
          data-rating=""
@@ -813,7 +847,7 @@
          <span class="game-platform">🎮 STEAM</span>
         </div>
       </div>
-    </div>   
+    </div>
 
     <div class="game-card"
          data-title="Tides of Annihilation"
@@ -829,9 +863,9 @@
          <span class="game-platform">🎮 STEAM</span>
         </div>
       </div>
-    </div> 
+    </div>
 
-   <div class="game-card"
+    <div class="game-card"
          data-title="Onimusha: Way of the Sword"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2638890/7b0993d5b7260711ad17aaf7b178ce72f5553796/header.jpg?t=1773275856"
          data-rating=""
@@ -845,9 +879,9 @@
          <span class="game-platform">🎮 STEAM</span>
         </div>
       </div>
-    </div>  
+    </div>
 
-<div class="game-card"
+    <div class="game-card"
          data-title="La Divina Commedia"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3883910/6bb43e189c397edf81d1ef4221250815fe393311/header.jpg?t=1755858524"
          data-rating=""
@@ -861,9 +895,9 @@
          <span class="game-platform">🎮 STEAM</span>
         </div>
       </div>
-    </div>  
+    </div>
 
-<div class="game-card"
+    <div class="game-card"
          data-title="Mistfall Hunter"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3282300/076ea16a152eb54368b86b1f1a918f361a7e7390/header_alt_assets_4.jpg?t=1775548432"
          data-rating=""
@@ -879,7 +913,7 @@
       </div>
     </div>
 
-<div class="game-card"
+    <div class="game-card"
          data-title="Valor Mortis"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2828710/e729c7f909db5c52ea780923d9b258517162866a/header.jpg?t=1775752046"
          data-rating=""
@@ -893,9 +927,9 @@
          <span class="game-platform">🎮 STEAM</span>
         </div>
       </div>
-    </div>   
+    </div>
 
-<div class="game-card"
+    <div class="game-card"
          data-title="Darksiders 4"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1203170/1dffc8cc0b74ab4e002e904d9022d54650bc84c8/header.jpg?t=1754915105"
          data-rating=""
@@ -909,7 +943,7 @@
          <span class="game-platform">🎮 STEAM</span>
         </div>
       </div>
-    </div> 
+    </div>
 
     <div class="game-card"
          data-title="Phantom Blade Zero"
@@ -925,14 +959,14 @@
          <span class="game-platform">🎮 STEAM</span>
         </div>
       </div>
-    </div>    
+    </div>
 
     <div class="game-card"
          data-title="METRO 2039"
          data-img="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2590240/6998fb70f896b0f155061de0b472a8262bd06ef9/header.jpg?t=1776779267"
          data-rating=""
          data-review="">
-      <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2590240/6998fb70f896b0f155061de0b472a8262bd06ef9/header.jpg?t=1776779267" alt="Phantom Blade Zero">
+      <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2590240/6998fb70f896b0f155061de0b472a8262bd06ef9/header.jpg?t=1776779267" alt="METRO 2039">
       <div class="card-hover-hint">👁 ПОДИВИТИСЬ</div>
       <div class="game-card-overlay planned-overlay">⏳ планах пограти</div>
       <div class="game-card-body">
@@ -941,9 +975,7 @@
          <span class="game-platform">🎮 STEAM</span>
         </div>
       </div>
-    </div>    
-
-
+    </div>
 
   </div>
 </div>
@@ -996,7 +1028,6 @@
       if (rating) {
         ratingRow.style.display = 'flex';
         scoreEl.textContent = rating;
-        /* delay so transition plays after modal opens */
         setTimeout(() => { scoreFill.style.width = (parseInt(rating) * 10) + '%'; }, 60);
       } else {
         ratingRow.style.display = 'none';
