@@ -163,15 +163,6 @@
   </style>
 </head>
 <body>
-<script src="twitch-auth.js"></script>
-<script>
-  // Захист сторінки — тільки sun69wukong може зайти
-  // Сторінка видима одразу, але якщо нема доступу — контент замінюється
-  TwitchAuth.protect(function(user) {
-    // Авторизований — все ок, навбар вже оновиться через _injectNavAuth
-    console.log('✅ Доступ дозволено:', user.display_name);
-  });
-</script>
 
 <nav>
   <a href="index.html" class="nav-logo">sun<span>69</span>wukong</a>
