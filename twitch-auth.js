@@ -9,7 +9,7 @@
  */
 
 const TWITCH_CONFIG = {
-  clientId:    'j7514269pj4qpxe7fcgxgwk9sx2u3e',   // ← ЗАМІНИТИ на свій
+  clientId:    'j7514269pj4qpxe7fcgxgwk9sx2u3e',
   redirectUri: (function() {
     const p = window.location.pathname;
     const base = window.location.origin + p.substring(0, p.lastIndexOf('/') + 1);
@@ -254,6 +254,11 @@ const TwitchAuth = {
         headers: { 'Authorization': `Bearer ${token}`, 'Client-Id': TWITCH_CONFIG.clientId }
       });
       const data = await res.json();
+      if (!data.data || !data.data[0]) {
+        if (spin) spin.style.display = 'none';
+        el.innerHTML = `<span style="color:#ff4d4d">❌ Помилка API Twitch: ${data.message || 'невідома помилка'}. Перевір Client ID.</span>`;
+        return;
+      }
       const user = data.data[0];
 
       if (user.login.toLowerCase() !== TWITCH_CONFIG.allowedUser.toLowerCase()) {
