@@ -9,7 +9,7 @@
  */
 
 const TWITCH_CONFIG = {
-  clientId:    'YOUR_TWITCH_CLIENT_ID',   // ← ЗАМІНИТИ на свій
+  clientId:    'j7514269pj4qpxe7fcgxgwk9sx2u3e',   // ← ЗАМІНИТИ на свій
   redirectUri: (function() {
     const p = window.location.pathname;
     const base = window.location.origin + p.substring(0, p.lastIndexOf('/') + 1);
