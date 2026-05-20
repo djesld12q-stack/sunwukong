@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Авторизація — sun69wukong</title>
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/djesld12q-stack/sunwukong/main/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Rajdhani', sans-serif; background: #07070f; color: #eeeef8;
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background-image: linear-gradient(rgba(145,70,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(145,70,255,.04) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+    .cb-box {
+      text-align: center; padding: 40px 32px;
+      background: rgba(13,13,26,.95);
+      border: 1px solid rgba(145,70,255,.25); border-radius: 16px;
+      max-width: 400px; width: 90%;
+      box-shadow: 0 0 80px rgba(145,70,255,.12);
+    }
+    .cb-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+      letter-spacing: 4px; color: #9146FF; margin-bottom: 24px;
+      text-decoration: none; display: block;
+    }
+    .cb-logo span { color: #9146FF; }
+    .spinner {
+      width: 48px; height: 48px; border: 3px solid rgba(145,70,255,.2);
+      border-top-color: #9146FF; border-radius: 50%;
+      animation: spin .8s linear infinite; margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #cb-status {
+      font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      color: #6e6e90; line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="cb-box">
+    <a href="index.html" class="cb-logo">sun<span>69</span>wukong</a>
+    <div class="spinner" id="spinner"></div>
+    <p id="cb-status">⏳ Обробляємо авторизацію...</p>
+  </div>
+  <script src="twitch-auth.js"></script>
+  <script>
+    TwitchAuth.handleCallback().then(() => {
+      document.getElementById('spinner').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
