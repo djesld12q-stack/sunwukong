@@ -9,7 +9,7 @@
  */
 
 const TWITCH_CONFIG = {
-  clientId:    'YOUR_TWITCH_CLIENT_ID',          // ← ЗАМІНИТИ
+  clientId:    'j7514269pj4qpxe7fcgxgwk9sx2u3e',          // ← ЗАМІНИТИ
   redirectUri: window.location.origin + (window.location.pathname.includes('/sunwukong') ? '/sunwukong' : '') + '/twitch-callback.html',
   allowedUser: 'sun69wukong',                     // єдиний дозволений логін
   scopes:      'user:read:email',
